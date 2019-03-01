@@ -14,12 +14,14 @@ SOURCES += main.cpp \
            mainview.cpp \
            areamap.cpp \
            viewplane.cpp \
-           actorposition.cpp
+           actorposition.cpp \
+    rayprojectile.cpp
 
 HEADERS += mainview.h \
            areamap.h \
            viewplane.h \
-           actorposition.h
+           actorposition.h \
+           rayprojectile.h
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

@@ -22,6 +22,7 @@ public:
 private:
     double posX;
     double posY;
+
     double dirX;
     double dirY;
 };
