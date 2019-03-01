@@ -15,7 +15,7 @@ SOURCES += main.cpp \
            areamap.cpp \
            viewplane.cpp \
            actorposition.cpp \
-    rayprojectile.cpp
+           rayprojectile.cpp
 
 HEADERS += mainview.h \
            areamap.h \
