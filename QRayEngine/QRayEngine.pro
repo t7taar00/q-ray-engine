@@ -1,20 +1,23 @@
-QT       += core gui
+QT      += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4):
+QT      += widgets
 
-TARGET = QRayEngine
+TARGET   = QRayEngine
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-CONFIG += c++11
+CONFIG  += c++11
 
-SOURCES += \
-        main.cpp \
-        mainview.cpp
+SOURCES += main.cpp \
+           mainview.cpp \
+           areamap.cpp \
+           viewplane.cpp
 
-HEADERS += \
-        mainview.h
+HEADERS += mainview.h \
+           areamap.h \
+           viewplane.h
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
