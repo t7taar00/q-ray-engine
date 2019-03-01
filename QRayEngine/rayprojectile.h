@@ -12,16 +12,16 @@ public:
     double getRayDirX() const;
     double getRayDirY() const;
 
-    void calcRayDirX(ActorPosition actorPosition, ViewPlane viewPlane, double cameraX);
-    void calcRayDirY(ActorPosition actorPosition, ViewPlane viewPlane, double cameraX);
+    void calcRayDirX(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX);
+    void calcRayDirY(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX);
 
     void calcDeltaDistX();
     void calcDeltaDistY();
 
-    int calcSideDistX(ActorPosition actorPosition);
-    int calcSideDistY(ActorPosition actorPosition);
+    int calcSideDistX(ActorPosition *actorPosition);
+    int calcSideDistY(ActorPosition *actorPosition);
 
-    int calcMapJump(ActorPosition actorPosition, int stepX, int stepY);
+    int calcMapJump(ActorPosition *actorPosition, int stepX, int stepY);
 
 private:
     double rayDirX;
