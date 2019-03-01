@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/texture">
+        <file>texture/dungeon_floor.png</file>
+        <file>texture/eagle.png</file>
+        <file>texture/greystone.png</file>
+        <file>texture/mossy.png</file>
+        <file>texture/purplestone.png</file>
+        <file>texture/redbrick.png</file>
+        <file>texture/ui_bottom.png</file>
+        <file>texture/ui_right.png</file>
+        <file>texture/wood.png</file>
+        <file>texture/wood_dark.png</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>font/OwreKynge.ttf</file>
+    </qresource>
+    <qresource prefix="/sound">
+        <file>sound/step.wav</file>
+    </qresource>
+    <qresource prefix="/music">
+        <file>music/tune.wav</file>
+    </qresource>
+</RCC>
