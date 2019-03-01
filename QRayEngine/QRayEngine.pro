@@ -10,18 +10,18 @@ DEFINES   += QT_DEPRECATED_WARNINGS
 
 CONFIG    += c++11
 
-SOURCES   += main.cpp \
-             mainview.cpp \
-             areamap.cpp \
-             viewplane.cpp \
-             actorposition.cpp \
-             rayprojectile.cpp
+SOURCES   += src/main.cpp \
+             src/mainview.cpp \
+             src/areamap.cpp \
+             src/viewplane.cpp \
+             src/actorposition.cpp \
+             src/rayprojectile.cpp
 
-HEADERS   += mainview.h \
-             areamap.h \
-             viewplane.h \
-             actorposition.h \
-             rayprojectile.h
+HEADERS   += src/mainview.h \
+             src/areamap.h \
+             src/viewplane.h \
+             src/actorposition.h \
+             src/rayprojectile.h
 
 RESOURCES += resources/resources.qrc
 
