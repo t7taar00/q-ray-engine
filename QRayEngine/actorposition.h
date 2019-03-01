@@ -19,12 +19,21 @@ public:
     double getDirY() const;
     void setDirY(double value);
 
+    int getMapX() const;
+    void setMapX(int value);
+
+    int getMapY() const;
+    void setMapY(int value);
+
 private:
     double posX;
     double posY;
 
     double dirX;
     double dirY;
+
+    int mapX;
+    int mapY;
 };
 
 #endif // ACTORPOSITION_H

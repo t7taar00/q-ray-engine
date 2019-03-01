@@ -48,3 +48,23 @@ void ActorPosition::setDirY(double value)
 {
     dirY = value;
 }
+
+int ActorPosition::getMapX() const
+{
+    return mapX;
+}
+
+void ActorPosition::setMapX(int value)
+{
+    mapX = value;
+}
+
+int ActorPosition::getMapY() const
+{
+    return mapY;
+}
+
+void ActorPosition::setMapY(int value)
+{
+    mapY = value;
+}
