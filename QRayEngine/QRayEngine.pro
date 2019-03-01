@@ -13,11 +13,13 @@ CONFIG  += c++11
 SOURCES += main.cpp \
            mainview.cpp \
            areamap.cpp \
-           viewplane.cpp
+           viewplane.cpp \
+           actorposition.cpp
 
 HEADERS += mainview.h \
            areamap.h \
-           viewplane.h
+           viewplane.h \
+           actorposition.h
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
