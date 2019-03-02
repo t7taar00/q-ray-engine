@@ -1,9 +1,6 @@
 #include "mainview.h"
 #include <QApplication>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
