@@ -15,13 +15,15 @@ SOURCES   += src/main.cpp \
              src/areamap.cpp \
              src/viewplane.cpp \
              src/actorposition.cpp \
-             src/rayprojectile.cpp
+             src/rayprojectile.cpp \
+             src/texturereader.cpp
 
 HEADERS   += src/mainview.h \
              src/areamap.h \
              src/viewplane.h \
              src/actorposition.h \
-             src/rayprojectile.h
+             src/rayprojectile.h \
+             src/texturereader.h
 
 RESOURCES += resources/resources.qrc
 
