@@ -1,6 +1,9 @@
 #ifndef TEXTUREREADER_H
 #define TEXTUREREADER_H
 
+#define TEXTURE_FLOOR 10
+#define TEXTURE_CEILING 11
+
 #include <QImage>
 #include <QColor>
 
