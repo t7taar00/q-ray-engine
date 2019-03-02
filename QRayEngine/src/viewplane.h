@@ -1,7 +1,6 @@
 #ifndef VIEWPLANE_H
 #define VIEWPLANE_H
 
-
 class ViewPlane
 {
 public:

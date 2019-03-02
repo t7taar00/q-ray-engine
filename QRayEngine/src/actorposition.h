@@ -1,7 +1,6 @@
 #ifndef ACTORPOSITION_H
 #define ACTORPOSITION_H
 
-
 class ActorPosition
 {
 public:

@@ -14,3 +14,28 @@ TextureReader::~TextureReader()
     textureImage = nullptr;
 }
 
+QColor TextureReader::getTexturePixel(int textureId, int x, int y)
+{
+    switch(textureId)
+    {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    case 10:
+        break;
+    case 11:
+        break;
+    default:
+        break;
+    }
+}
+

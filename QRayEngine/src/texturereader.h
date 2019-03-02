@@ -2,12 +2,15 @@
 #define TEXTUREREADER_H
 
 #include <QImage>
+#include <QColor>
 
 class TextureReader
 {
 public:
     TextureReader();
     ~TextureReader();
+
+    QColor getTexturePixel(int textureId, int x, int y);
 
 private:
     static const int textureWidth;
