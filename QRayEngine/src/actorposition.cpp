@@ -1,5 +1,8 @@
 #include "actorposition.h"
 
+const double ActorPosition::moveSpeed(0.2);
+const double ActorPosition::rotateSpeed(0.05);
+
 ActorPosition::ActorPosition()
 {
     posX = 22;

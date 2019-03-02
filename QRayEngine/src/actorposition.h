@@ -25,6 +25,9 @@ public:
     void setMapY(int value);
 
 private:
+    static const double moveSpeed;
+    static const double rotateSpeed;
+
     double posX;
     double posY;
 
