@@ -24,10 +24,10 @@ public:
     int getMapY() const;
     void setMapY(int value);
 
-private:
     static const double moveSpeed;
     static const double rotateSpeed;
 
+private:
     double posX;
     double posY;
 

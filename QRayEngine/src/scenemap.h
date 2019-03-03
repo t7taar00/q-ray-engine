@@ -6,7 +6,7 @@
 
 class SceneMap
 {
-private:
+public:
     static const int mapArray[MAP_WIDTH][MAP_HEIGHT];
 };
 
