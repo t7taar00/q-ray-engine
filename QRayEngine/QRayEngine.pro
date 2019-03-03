@@ -17,7 +17,8 @@ SOURCES   += src/main.cpp \
              src/rayprojectile.cpp \
              src/texturereader.cpp \
              src/userinput.cpp \
-             src/scenemap.cpp
+             src/scenemap.cpp \
+             src/sceneview.cpp
 
 HEADERS   += src/mainview.h \
              src/viewplane.h \
@@ -25,7 +26,8 @@ HEADERS   += src/mainview.h \
              src/rayprojectile.h \
              src/texturereader.h \
              src/userinput.h \
-             src/scenemap.h
+             src/scenemap.h \
+             src/sceneview.h
 
 RESOURCES += resources/resources.qrc
 

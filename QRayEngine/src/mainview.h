@@ -4,10 +4,9 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define SCENE_VIEW_WIDTH 640
-#define SCENE_VIEW_HEIGHT 480
-
 #include <QMainWindow>
+
+#include "sceneview.h"
 
 class MainView : public QMainWindow
 {
@@ -16,6 +15,9 @@ class MainView : public QMainWindow
 public:
     MainView(QWidget *parent = nullptr);
     ~MainView();
+
+private:
+    SceneView *sceneView;
 };
 
 #endif // MAINVIEW_H
