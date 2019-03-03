@@ -12,20 +12,20 @@ CONFIG    += c++11
 
 SOURCES   += src/main.cpp \
              src/mainview.cpp \
-             src/areamap.cpp \
              src/viewplane.cpp \
              src/actorposition.cpp \
              src/rayprojectile.cpp \
              src/texturereader.cpp \
-             src/userinput.cpp
+             src/userinput.cpp \
+             src/scenemap.cpp
 
 HEADERS   += src/mainview.h \
-             src/areamap.h \
              src/viewplane.h \
              src/actorposition.h \
              src/rayprojectile.h \
              src/texturereader.h \
-             src/userinput.h
+             src/userinput.h \
+             src/scenemap.h
 
 RESOURCES += resources/resources.qrc
 

@@ -1,6 +1,6 @@
-#include "areamap.h"
+#include "scenemap.h"
 
-const int AreaMap::mapArray[MAP_WIDTH][MAP_HEIGHT]
+const int SceneMap::mapArray[MAP_WIDTH][MAP_HEIGHT]
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
