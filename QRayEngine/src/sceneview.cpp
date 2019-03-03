@@ -4,11 +4,23 @@ SceneView::SceneView(QWidget *parent) : QWidget(parent)
 {
     this->setGeometry(0, 0, SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT);
     this->setFocusPolicy(Qt::StrongFocus);
+
+    actorPosition = new ActorPosition;
+    viewPlane = new ViewPlane;
+
+    inputHandler = new InputHandler(actorPosition, viewPlane);
 }
 
 SceneView::~SceneView()
 {
+    delete actorPosition;
+    actorPosition = nullptr;
 
+    delete viewPlane;
+    viewPlane = nullptr;
+
+    delete inputHandler;
+    inputHandler = nullptr;
 }
 
 void SceneView::keyPressEvent(QKeyEvent *event)
@@ -16,15 +28,15 @@ void SceneView::keyPressEvent(QKeyEvent *event)
     event->accept();
 
     if(event->key() == Qt::Key_A)
-        qDebug() << "A";
+        inputHandler->inputEventTurnLeft();
     if(event->key() == Qt::Key_D)
-        qDebug() << "D";
+        inputHandler->inputEventTurnRight();
     if(event->key() == Qt::Key_W)
-        qDebug() << "W";
+        inputHandler->inputEventMoveForward();
     if(event->key() == Qt::Key_S)
-        qDebug() << "S";
+        inputHandler->inputEventMoveBackwards();
     if(event->key() == Qt::Key_Q)
-        qDebug() << "Q";
+        inputHandler->inputEventStrafeLeft();
     if(event->key() == Qt::Key_E)
-        qDebug() << "E";
+        inputHandler->inputEventStrafeRight();
 }

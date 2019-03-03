@@ -14,3 +14,33 @@ InputHandler::~InputHandler()
     delete viewPlaneToHandle;
     viewPlaneToHandle = nullptr;
 }
+
+void InputHandler::inputEventMoveForward()
+{
+
+}
+
+void InputHandler::inputEventMoveBackwards()
+{
+
+}
+
+void InputHandler::inputEventTurnLeft()
+{
+
+}
+
+void InputHandler::inputEventTurnRight()
+{
+
+}
+
+void InputHandler::inputEventStrafeLeft()
+{
+
+}
+
+void InputHandler::inputEventStrafeRight()
+{
+
+}

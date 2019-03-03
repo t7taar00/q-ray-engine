@@ -4,7 +4,6 @@
 #define SCENE_VIEW_WIDTH 640
 #define SCENE_VIEW_HEIGHT 480
 
-#include <QDebug>
 #include <QWidget>
 #include <QKeyEvent>
 
@@ -20,12 +19,10 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event);
 
-signals:
-
-public slots:
-
 private:
-
+    ActorPosition *actorPosition;
+    ViewPlane *viewPlane;
+    InputHandler *inputHandler;
 };
 
 #endif // SCENEVIEW_H
