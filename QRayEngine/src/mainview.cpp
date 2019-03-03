@@ -2,7 +2,8 @@
 
 MainView::MainView(QWidget *parent) : QMainWindow(parent)
 {
-    sceneView = new SceneView;
+    sceneView = new SceneView(this);
+    sceneView->show();
 }
 
 MainView::~MainView()

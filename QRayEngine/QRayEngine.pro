@@ -16,18 +16,18 @@ SOURCES   += src/main.cpp \
              src/actorposition.cpp \
              src/rayprojectile.cpp \
              src/texturereader.cpp \
-             src/userinput.cpp \
              src/scenemap.cpp \
-             src/sceneview.cpp
+             src/sceneview.cpp \
+             src/inputhandler.cpp
 
 HEADERS   += src/mainview.h \
              src/viewplane.h \
              src/actorposition.h \
              src/rayprojectile.h \
              src/texturereader.h \
-             src/userinput.h \
              src/scenemap.h \
-             src/sceneview.h
+             src/sceneview.h \
+             src/inputhandler.h
 
 RESOURCES += resources/resources.qrc
 
