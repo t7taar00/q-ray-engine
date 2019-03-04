@@ -6,8 +6,12 @@
 
 #include <QWidget>
 #include <QKeyEvent>
+#include <QBasicTimer>
+#include <QPainter>
 
 #include "inputhandler.h"
+#include "rayprojectile.h"
+#include "texturereader.h"
 
 class SceneView : public QWidget
 {
@@ -16,12 +20,20 @@ public:
     explicit SceneView(QWidget *parent = nullptr);
     ~SceneView();
 
+    void renderScene();
+
 protected:
     void keyPressEvent(QKeyEvent *event);
+    void timerEvent(QTimerEvent*);
+    void paintEvent(QPaintEvent *event);
 
 private:
+    QBasicTimer ticker;
+    QImage buffer;
     ActorPosition *actorPosition;
     ViewPlane *viewPlane;
+    RayProjectile *rayProjectile;
+    TextureReader *textureReader;
     InputHandler *inputHandler;
 };
 

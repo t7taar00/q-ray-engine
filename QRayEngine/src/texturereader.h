@@ -15,10 +15,10 @@ public:
 
     QColor getTexturePixel(int textureId, int x, int y);
 
-private:
     static const int textureWidth;
     static const int textureHeight;
 
+private:
     QImage *textureImage;
 };
 
