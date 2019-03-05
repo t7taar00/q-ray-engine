@@ -1,9 +1,10 @@
 #ifndef TEXTUREREADER_H
 #define TEXTUREREADER_H
 
-#define TEXTURE_FLOOR 10
-#define TEXTURE_CEILING 11
+#define TEXTURE_FLOOR 0
+#define TEXTURE_CEILING 7
 
+#include <vector>
 #include <QImage>
 #include <QColor>
 
@@ -13,13 +14,14 @@ public:
     TextureReader();
     ~TextureReader();
 
-    QColor getTexturePixel(int textureId, int x, int y);
+    QColor getTexturePixel(unsigned int textureId, int x, int y);
 
     static const int textureWidth;
     static const int textureHeight;
 
 private:
-    QImage *textureImage;
+    std::vector<QImage> *textureImages;
+    QImage textureImage;
 };
 
 #endif // TEXTUREREADER_H
