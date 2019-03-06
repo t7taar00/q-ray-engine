@@ -12,6 +12,8 @@ SceneView::SceneView(QWidget *parent) : QWidget(parent)
     textureReader = new TextureReader;
     inputHandler = new InputHandler(actorPosition, viewPlane);
 
+    buffer = QImage(SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT, QImage::Format_RGB32);
+
     ticker.start(20, this);
 }
 
@@ -66,8 +68,6 @@ void SceneView::paintEvent(QPaintEvent *event)
 
 void SceneView::renderScene()
 {
-    buffer = QImage(SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT, QImage::Format_RGB32);
-
     for(int x = 0; x < SCENE_VIEW_WIDTH; x++)
     {
         // calculate ray position and direction
