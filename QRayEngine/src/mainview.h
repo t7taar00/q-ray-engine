@@ -5,6 +5,7 @@
 #define WINDOW_HEIGHT 600
 
 #include <QMainWindow>
+#include <QLabel>
 
 #include "sceneview.h"
 
@@ -17,7 +18,11 @@ public:
     ~MainView();
 
 private:
+    QPixmap uiImageLoader;
+
     SceneView *sceneView;
+    QLabel *uiBottom;
+    QLabel *uiRight;
 };
 
 #endif // MAINVIEW_H

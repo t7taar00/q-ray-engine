@@ -30,6 +30,7 @@ protected:
 private:
     QBasicTimer ticker;
     QImage buffer;
+
     ActorPosition *actorPosition;
     ViewPlane *viewPlane;
     RayProjectile *rayProjectile;

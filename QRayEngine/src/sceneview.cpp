@@ -114,8 +114,11 @@ void SceneView::renderScene()
         }
 
         // calculate distance projected on camera direction
-        if(side == 0) perpWallDist = (mapX - actorPosition->getPosX() + (1 - stepX) / 2) / rayProjectile->getRayDirX();
-        else          perpWallDist = (mapY - actorPosition->getPosY() + (1 - stepY) / 2) / rayProjectile->getRayDirY();
+        if(side == 0) perpWallDist = (mapX - actorPosition->getPosX() + (1 - stepX) / 2) /
+                                     rayProjectile->getRayDirX();
+
+        else          perpWallDist = (mapY - actorPosition->getPosY() + (1 - stepY) / 2) /
+                                     rayProjectile->getRayDirY();
 
         // calculate height of line to draw on screen
         int lineHeight = static_cast<int>(SCENE_VIEW_HEIGHT / perpWallDist);
@@ -132,8 +135,11 @@ void SceneView::renderScene()
         // calculate value of wallX
         double wallX; // where exactly the wall was hit
 
-        if(side == 0) wallX = actorPosition->getPosY() + perpWallDist * rayProjectile->getRayDirY();
-        else          wallX = actorPosition->getPosX() + perpWallDist * rayProjectile->getRayDirX();
+        if(side == 0) wallX = actorPosition->getPosY() + perpWallDist *
+                              rayProjectile->getRayDirY();
+
+        else          wallX = actorPosition->getPosX() + perpWallDist *
+                              rayProjectile->getRayDirX();
 
         wallX -= std::floor(wallX);
 
