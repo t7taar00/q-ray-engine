@@ -127,7 +127,7 @@ void SceneView::renderScene()
         int drawEnd = lineHeight / 2 + SCENE_VIEW_HEIGHT / 2;
         if(drawEnd >= SCENE_VIEW_HEIGHT) drawEnd = SCENE_VIEW_HEIGHT - 1;
 
-        int textureId = SceneMap::mapArray[mapX][mapY];
+        uint textureId = static_cast<uint>(SceneMap::mapArray[mapX][mapY]);
 
         // calculate value of wallX
         double wallX; // where exactly the wall was hit
@@ -140,8 +140,11 @@ void SceneView::renderScene()
         // x coordinate on the texture
         int texX = static_cast<int>(wallX * TextureReader::textureWidth);
 
-        if(side == 0 && rayProjectile->getRayDirX() > 0) texX = TextureReader::textureWidth - texX - 1;
-        if(side == 1 && rayProjectile->getRayDirY() < 0) texX = TextureReader::textureWidth - texX - 1;
+        if(side == 0 && rayProjectile->getRayDirX() > 0)
+            texX = TextureReader::textureWidth - texX - 1;
+
+        if(side == 1 && rayProjectile->getRayDirY() < 0)
+            texX = TextureReader::textureWidth - texX - 1;
 
         for(int y = drawStart; y < drawEnd; y++)
         {
@@ -193,22 +196,32 @@ void SceneView::renderScene()
 
             double weight = (currentDist - distActor) / (distWall - distActor);
 
-            double currentFloorX = weight * floorXWall + (1.0 - weight) * actorPosition->getPosX();
-            double currentFloorY = weight * floorYWall + (1.0 - weight) * actorPosition->getPosY();
+            double currentFloorX = weight * floorXWall + (1.0 - weight) *
+                                   actorPosition->getPosX();
+
+            double currentFloorY = weight * floorYWall + (1.0 - weight) *
+                                   actorPosition->getPosY();
 
             int floorTexX, floorTexY;
-            floorTexX = static_cast<int>(currentFloorX * TextureReader::textureWidth) % TextureReader::textureWidth;
-            floorTexY = static_cast<int>(currentFloorY * TextureReader::textureHeight) % TextureReader::textureHeight;
+
+            floorTexX = static_cast<int>(currentFloorX * TextureReader::textureWidth) %
+                        TextureReader::textureWidth;
+
+            floorTexY = static_cast<int>(currentFloorY * TextureReader::textureHeight) %
+                        TextureReader::textureHeight;
 
             // floor
-            QColor texFloorColor = textureReader->getTexturePixel(TEXTURE_FLOOR, floorTexX, floorTexY);
+            QColor texFloorColor = textureReader->getTexturePixel(
+                        textureReader->getTextureFloor(), floorTexX, floorTexY);
+
             buffer.setPixelColor(x, y, texFloorColor);
 
             // ceiling
-            QColor texCeilingColor = textureReader->getTexturePixel(TEXTURE_CEILING, floorTexX, floorTexY);
+            QColor texCeilingColor = textureReader->getTexturePixel(
+                        textureReader->getTextureCeiling(), floorTexX, floorTexY);
+
             buffer.setPixelColor(x, SCENE_VIEW_HEIGHT - y, texCeilingColor);
         }
     }
     update();
 }
-

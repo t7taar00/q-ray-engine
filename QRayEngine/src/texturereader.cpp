@@ -31,6 +31,9 @@ TextureReader::TextureReader()
 
     textureImage.load(":/texture/texture/wood_dark.png");
     textureImages->push_back(textureImage);
+
+    textureFloor = 0;
+    textureCeiling = static_cast<uint>(textureImages->size() - 1);
 }
 
 TextureReader::~TextureReader()
@@ -39,8 +42,18 @@ TextureReader::~TextureReader()
     textureImages = nullptr;
 }
 
-QColor TextureReader::getTexturePixel(unsigned int textureId, int x, int y)
+QColor TextureReader::getTexturePixel(uint textureId, int x, int y)
 {
     return textureImages->at(textureId).pixelColor(x, y);
+}
+
+uint TextureReader::getTextureFloor() const
+{
+    return textureFloor;
+}
+
+uint TextureReader::getTextureCeiling() const
+{
+    return textureCeiling;
 }
 
