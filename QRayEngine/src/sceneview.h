@@ -3,6 +3,7 @@
 
 #define SCENE_VIEW_WIDTH 640
 #define SCENE_VIEW_HEIGHT 480
+#define HORIZONTAL_SKIP 2
 
 #include <QWidget>
 #include <QKeyEvent>

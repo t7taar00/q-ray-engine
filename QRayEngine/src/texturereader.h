@@ -16,6 +16,9 @@ public:
     uint getTextureFloor() const;
     uint getTextureCeiling() const;
 
+    int calcWallDarkness(int lineHeight);      // TODO: currently just for testing,
+    int calcFloorDarkness(double currentDist); // fix these awful functions in future
+
     static const int textureWidth;
     static const int textureHeight;
 

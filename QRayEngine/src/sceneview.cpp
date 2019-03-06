@@ -68,7 +68,7 @@ void SceneView::paintEvent(QPaintEvent *event)
 
 void SceneView::renderScene()
 {
-    for(int x = 0; x < SCENE_VIEW_WIDTH; x++)
+    for(int x = 0; x < SCENE_VIEW_WIDTH; x = x + HORIZONTAL_SKIP)
     {
         // calculate ray position and direction
         double cameraX = 2 * x / static_cast<double>(SCENE_VIEW_WIDTH) - 1; // x-coordinate in camera space
@@ -152,6 +152,8 @@ void SceneView::renderScene()
         if(side == 1 && rayProjectile->getRayDirY() < 0)
             texX = TextureReader::textureWidth - texX - 1;
 
+        int darknessFactor = textureReader->calcWallDarkness(lineHeight);
+
         for(int y = drawStart; y < drawEnd; y++)
         {
             int d = y * 256 - SCENE_VIEW_HEIGHT * 128 + lineHeight * 128;  // 256 and 128 factors to avoid floats
@@ -160,7 +162,8 @@ void SceneView::renderScene()
 
             QColor textureColor = textureReader->getTexturePixel(textureId, texX, texY);
 
-            buffer.setPixelColor(x, y, textureColor);
+            if(side == 1) buffer.setPixelColor(x, y, textureColor.darker(darknessFactor + 50));
+            else          buffer.setPixelColor(x, y, textureColor.darker(darknessFactor));
         }
 
         // FLOOR CASTING
@@ -216,17 +219,19 @@ void SceneView::renderScene()
             floorTexY = static_cast<int>(currentFloorY * TextureReader::textureHeight) %
                         TextureReader::textureHeight;
 
+            int darknessFactor = textureReader->calcFloorDarkness(currentDist);
+
             // floor
             QColor texFloorColor = textureReader->getTexturePixel(
                         textureReader->getTextureFloor(), floorTexX, floorTexY);
 
-            buffer.setPixelColor(x, y, texFloorColor);
+            buffer.setPixelColor(x, y, texFloorColor.darker(darknessFactor));
 
             // ceiling
             QColor texCeilingColor = textureReader->getTexturePixel(
                         textureReader->getTextureCeiling(), floorTexX, floorTexY);
 
-            buffer.setPixelColor(x, SCENE_VIEW_HEIGHT - y, texCeilingColor);
+            buffer.setPixelColor(x, SCENE_VIEW_HEIGHT - y, texCeilingColor.darker(darknessFactor));
         }
     }
     update();

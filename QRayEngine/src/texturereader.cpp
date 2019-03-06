@@ -57,3 +57,19 @@ uint TextureReader::getTextureCeiling() const
     return textureCeiling;
 }
 
+int TextureReader::calcWallDarkness(int lineHeight)
+{
+    int darknessFactor = 600 - lineHeight * 2;
+    if(darknessFactor < 80) darknessFactor = 80;
+
+    return darknessFactor;
+}
+
+int TextureReader::calcFloorDarkness(double currentDist)
+{
+    int darknessFactor = static_cast<int>(currentDist * 50);
+    if(darknessFactor < 80) darknessFactor = 80;
+
+    return darknessFactor;
+}
+
