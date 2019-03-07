@@ -4,6 +4,7 @@ SceneView::SceneView(QWidget *parent) : QWidget(parent)
 {
     this->setGeometry(0, 0, SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT);
     this->setFocusPolicy(Qt::StrongFocus);
+    this->setCursor(Qt::CrossCursor);
 
     actorPosition = new ActorPosition;
     viewPlane = new ViewPlane;
