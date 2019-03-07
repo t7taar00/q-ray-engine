@@ -15,6 +15,9 @@ SceneView::SceneView(QWidget *parent) : QWidget(parent)
     buffer = QImage(SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT, QImage::Format_RGB32);
 
     ticker.start(20, this);
+
+    musicFX = new AudioFX(":/music/music/tune.wav", QSound::Infinite);
+    musicFX->playAudio();
 }
 
 SceneView::~SceneView()
@@ -33,6 +36,9 @@ SceneView::~SceneView()
 
     delete inputHandler;
     inputHandler = nullptr;
+
+    delete musicFX;
+    musicFX = nullptr;
 }
 
 void SceneView::keyPressEvent(QKeyEvent *event)

@@ -13,6 +13,7 @@
 #include "inputhandler.h"
 #include "rayprojectile.h"
 #include "texturereader.h"
+#include "audiofx.h"
 
 class SceneView : public QWidget
 {
@@ -37,6 +38,7 @@ private:
     RayProjectile *rayProjectile;
     TextureReader *textureReader;
     InputHandler *inputHandler;
+    AudioFX *musicFX;
 };
 
 #endif // SCENEVIEW_H
