@@ -1,4 +1,4 @@
-QT        += core gui
+QT        += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4):
 QT        += widgets
@@ -18,7 +18,8 @@ SOURCES   += src/main.cpp \
              src/texturereader.cpp \
              src/scenemap.cpp \
              src/sceneview.cpp \
-             src/inputhandler.cpp
+             src/inputhandler.cpp \
+             src/audiofx.cpp
 
 HEADERS   += src/mainview.h \
              src/viewplane.h \
@@ -27,7 +28,8 @@ HEADERS   += src/mainview.h \
              src/texturereader.h \
              src/scenemap.h \
              src/sceneview.h \
-             src/inputhandler.h
+             src/inputhandler.h \
+             src/audiofx.h
 
 RESOURCES += resources/resources.qrc
 
