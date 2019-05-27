@@ -2,26 +2,26 @@
 
 ViewPlane::ViewPlane()
 {
-    planeX = 0;
-    planeY = 0.66;
+    m_planeX = 0;
+    m_planeY = 0.66;
 }
 
-double ViewPlane::getPlaneX() const
+qreal ViewPlane::getPlaneX() const
 {
-    return planeX;
+    return m_planeX;
 }
 
-void ViewPlane::setPlaneX(double value)
+void ViewPlane::setPlaneX(qreal value)
 {
-    planeX = value;
+    m_planeX = value;
 }
 
-double ViewPlane::getPlaneY() const
+qreal ViewPlane::getPlaneY() const
 {
-    return planeY;
+    return m_planeY;
 }
 
-void ViewPlane::setPlaneY(double value)
+void ViewPlane::setPlaneY(qreal value)
 {
-    planeY = value;
+    m_planeY = value;
 }

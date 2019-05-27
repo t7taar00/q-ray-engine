@@ -1,37 +1,38 @@
 #include "mainview.h"
 
-MainView::MainView(QWidget *parent) : QMainWindow(parent)
+MainView::MainView(QWidget *parent)
+    : QMainWindow(parent)
 {
     this->setStyleSheet("background-color: black;");
 
-    sceneView = new SceneView(this);
-    sceneView->show();
+    m_sceneView = new SceneView(this);
+    m_sceneView->show();
 
     // TODO: figure out a better way to express the dimensions later on
 
-    uiImageLoader = QPixmap(640, 120);
-    uiImageLoader.load(":/texture/texture/ui_bottom.png");
+    m_uiImageLoader = QPixmap(640, 120);
+    m_uiImageLoader.load(":/texture/texture/ui_bottom.png");
 
-    uiBottom = new QLabel(this);
-    uiBottom->setPixmap(uiImageLoader);
-    uiBottom->setGeometry(0, 480, 640, 120);
+    m_uiBottom = new QLabel(this);
+    m_uiBottom->setPixmap(m_uiImageLoader);
+    m_uiBottom->setGeometry(0, 480, 640, 120);
 
-    uiImageLoader = QPixmap(160, 600);
-    uiImageLoader.load(":/texture/texture/ui_right.png");
+    m_uiImageLoader = QPixmap(160, 600);
+    m_uiImageLoader.load(":/texture/texture/ui_right.png");
 
-    uiRight = new QLabel(this);
-    uiRight->setPixmap(uiImageLoader);
-    uiRight->setGeometry(640, 0, 160, 600);
+    m_uiRight = new QLabel(this);
+    m_uiRight->setPixmap(m_uiImageLoader);
+    m_uiRight->setGeometry(640, 0, 160, 600);
 }
 
 MainView::~MainView()
 {
-    delete sceneView;
-    sceneView = nullptr;
+    delete m_sceneView;
+    m_sceneView = nullptr;
 
-    delete uiBottom;
-    uiBottom = nullptr;
+    delete m_uiBottom;
+    m_uiBottom = nullptr;
 
-    delete uiRight;
-    uiRight = nullptr;
+    delete m_uiRight;
+    m_uiRight = nullptr;
 }

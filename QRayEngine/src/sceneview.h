@@ -5,6 +5,7 @@
 #define SCENE_VIEW_HEIGHT 480
 #define HORIZONTAL_SKIP 2
 
+#include <QtGlobal>
 #include <QWidget>
 #include <QKeyEvent>
 #include <QBasicTimer>
@@ -26,19 +27,19 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
-    void timerEvent(QTimerEvent*);
+    void timerEvent(QTimerEvent *);
     void paintEvent(QPaintEvent *event);
 
 private:
-    QBasicTimer ticker;
-    QImage buffer;
+    QBasicTimer m_ticker;
+    QImage m_buffer;
 
-    ActorPosition *actorPosition;
-    ViewPlane *viewPlane;
-    RayProjectile *rayProjectile;
-    TextureReader *textureReader;
-    InputHandler *inputHandler;
-    AudioFX *musicFX;
+    ActorPosition *m_actorPosition;
+    ViewPlane *m_viewPlane;
+    RayProjectile *m_rayProjectile;
+    TextureReader *m_textureReader;
+    InputHandler *m_inputHandler;
+    AudioFX *m_musicFX;
 };
 
 #endif // SCENEVIEW_H

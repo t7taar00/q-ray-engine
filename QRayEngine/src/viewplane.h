@@ -1,20 +1,22 @@
 #ifndef VIEWPLANE_H
 #define VIEWPLANE_H
 
+#include <QtGlobal>
+
 class ViewPlane
 {
 public:
     ViewPlane();
 
-    double getPlaneX() const;
-    void setPlaneX(double value);
+    qreal getPlaneX() const;
+    void setPlaneX(qreal value);
 
-    double getPlaneY() const;
-    void setPlaneY(double value);
+    qreal getPlaneY() const;
+    void setPlaneY(qreal value);
 
 private:
-    double planeX;
-    double planeY;
+    qreal m_planeX;
+    qreal m_planeY;
 };
 
 #endif // VIEWPLANE_H

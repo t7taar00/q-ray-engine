@@ -1,25 +1,26 @@
 #include "audiofx.h"
 
-AudioFX::AudioFX(const QString &filename, int loopCount)
+AudioFX::AudioFX(const QString &filename, qint16 loopCount)
 {
-    audio = new QSound(filename);
-    audio->setLoops(loopCount);
+    m_audio = new QSound(filename);
+    m_audio->setLoops(loopCount);
 }
 
 AudioFX::~AudioFX()
 {
-    if(!audio->isFinished()) audio->stop();
+    stopAudio();
 
-    delete audio;
-    audio = nullptr;
+    delete m_audio;
+    m_audio = nullptr;
 }
 
 void AudioFX::playAudio()
 {
-    audio->play();
+    m_audio->play();
 }
 
 void AudioFX::stopAudio()
 {
-    if(!audio->isFinished()) audio->stop();
+    if (!m_audio->isFinished())
+        m_audio->stop();
 }

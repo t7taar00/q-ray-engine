@@ -4,6 +4,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
+#include <QtGlobal>
 #include <QMainWindow>
 #include <QLabel>
 
@@ -18,11 +19,11 @@ public:
     ~MainView();
 
 private:
-    QPixmap uiImageLoader;
+    QPixmap m_uiImageLoader;
 
-    SceneView *sceneView;
-    QLabel *uiBottom;
-    QLabel *uiRight;
+    SceneView *m_sceneView;
+    QLabel *m_uiBottom;
+    QLabel *m_uiRight;
 };
 
 #endif // MAINVIEW_H

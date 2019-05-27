@@ -1,75 +1,75 @@
 #include "rayprojectile.h"
 
-double RayProjectile::getRayDirX() const
+qreal RayProjectile::getRayDirX() const
 {
-    return rayDirX;
+    return m_rayDirX;
 }
 
-double RayProjectile::getRayDirY() const
+qreal RayProjectile::getRayDirY() const
 {
-    return rayDirY;
+    return m_rayDirY;
 }
 
-void RayProjectile::calcRayDirX(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX)
+void RayProjectile::calcRayDirX(ActorPosition *actorPosition,
+    ViewPlane *viewPlane, qreal cameraX)
 {
-    rayDirX = actorPosition->getDirX() + viewPlane->getPlaneX() * cameraX;
+    m_rayDirX = actorPosition->getDirX() + viewPlane->getPlaneX() * cameraX;
 }
 
-void RayProjectile::calcRayDirY(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX)
+void RayProjectile::calcRayDirY(ActorPosition *actorPosition,
+    ViewPlane *viewPlane, qreal cameraX)
 {
-    rayDirY = actorPosition->getDirY() + viewPlane->getPlaneY() * cameraX;
+    m_rayDirY = actorPosition->getDirY() + viewPlane->getPlaneY() * cameraX;
 }
 
 void RayProjectile::calcDeltaDistX()
 {
-    deltaDistX = std::abs(1.0 / rayDirX);
+    m_deltaDistX = std::abs(1.0 / m_rayDirX);
 }
 
 void RayProjectile::calcDeltaDistY()
 {
-    deltaDistY = std::abs(1.0 / rayDirY);
+    m_deltaDistY = std::abs(1.0 / m_rayDirY);
 }
 
-int RayProjectile::calcSideDistX(ActorPosition *actorPosition)
+qint8 RayProjectile::calcSideDistX(ActorPosition *actorPosition)
 {
-    if(rayDirX < 0)
-    {
-        sideDistX = (actorPosition->getPosX() - actorPosition->getMapX()) * deltaDistX;
+    if (m_rayDirX < 0) {
+        m_sideDistX = (actorPosition->getPosX()
+            - actorPosition->getMapX()) * m_deltaDistX;
         return -1;
-    }
-    else
-    {
-        sideDistX = (actorPosition->getMapX() + 1.0 - actorPosition->getPosX()) * deltaDistX;
+    } else {
+        m_sideDistX = (actorPosition->getMapX() + 1.0
+            - actorPosition->getPosX()) * m_deltaDistX;
         return 1;
     }
 }
 
-int RayProjectile::calcSideDistY(ActorPosition *actorPosition)
+qint8 RayProjectile::calcSideDistY(ActorPosition *actorPosition)
 {
-    if(rayDirY < 0)
-    {
-        sideDistY = (actorPosition->getPosY() - actorPosition->getMapY()) * deltaDistY;
+    if (m_rayDirY < 0) {
+        m_sideDistY = (actorPosition->getPosY()
+            - actorPosition->getMapY()) * m_deltaDistY;
         return -1;
-    }
-    else
-    {
-        sideDistY = (actorPosition->getMapY() + 1.0 - actorPosition->getPosY()) * deltaDistY;
+    } else {
+        m_sideDistY = (actorPosition->getMapY() + 1.0
+            - actorPosition->getPosY()) * m_deltaDistY;
         return 1;
     }
 }
 
-int RayProjectile::calcMapJump(ActorPosition *actorPosition, int stepX, int stepY)
+qint8 RayProjectile::calcMapJump(ActorPosition *actorPosition,
+    qint8 stepX, qint8 stepY)
 {
-    if(sideDistX < sideDistY)
-    {
-        sideDistX += deltaDistX;
-        actorPosition->setMapX(actorPosition->getMapX() + stepX);
+    if (m_sideDistX < m_sideDistY) {
+        m_sideDistX += m_deltaDistX;
+        actorPosition->setMapX(actorPosition->getMapX()
+            + static_cast<quint8>(stepX));
         return 0;
-    }
-    else
-    {
-        sideDistY += deltaDistY;
-        actorPosition->setMapY(actorPosition->getMapY() + stepY);
+    } else {
+        m_sideDistY += m_deltaDistY;
+        actorPosition->setMapY(actorPosition->getMapY()
+            + static_cast<quint8>(stepY));
         return 1;
     }
 }

@@ -1,6 +1,8 @@
 #ifndef RAYPROJECTILE_H
 #define RAYPROJECTILE_H
 
+#include <QtGlobal>
+
 #include <math.h>
 
 #include "actorposition.h"
@@ -9,29 +11,32 @@
 class RayProjectile
 {
 public:
-    double getRayDirX() const;
-    double getRayDirY() const;
+    qreal getRayDirX() const;
+    qreal getRayDirY() const;
 
-    void calcRayDirX(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX);
-    void calcRayDirY(ActorPosition *actorPosition, ViewPlane *viewPlane, double cameraX);
+    void calcRayDirX(ActorPosition *actorPosition, ViewPlane *viewPlane,
+                     qreal cameraX);
+    void calcRayDirY(ActorPosition *actorPosition, ViewPlane *viewPlane,
+                     qreal cameraX);
 
     void calcDeltaDistX();
     void calcDeltaDistY();
 
-    int calcSideDistX(ActorPosition *actorPosition);
-    int calcSideDistY(ActorPosition *actorPosition);
+    qint8 calcSideDistX(ActorPosition *actorPosition);
+    qint8 calcSideDistY(ActorPosition *actorPosition);
 
-    int calcMapJump(ActorPosition *actorPosition, int stepX, int stepY);
+    qint8 calcMapJump(ActorPosition *actorPosition,
+                       qint8 stepX, qint8 stepY);
 
 private:
-    double rayDirX;
-    double rayDirY;
+    qreal m_rayDirX;
+    qreal m_rayDirY;
 
-    double sideDistX;
-    double sideDistY;
+    qreal m_sideDistX;
+    qreal m_sideDistY;
 
-    double deltaDistX;
-    double deltaDistY;
+    qreal m_deltaDistX;
+    qreal m_deltaDistY;
 };
 
 #endif // RAYPROJECTILE_H

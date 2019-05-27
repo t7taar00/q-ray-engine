@@ -1,6 +1,8 @@
 #ifndef INPUTHANDLER_H
 #define INPUTHANDLER_H
 
+#include <QtGlobal>
+
 #include <math.h>
 
 #include "actorposition.h"
@@ -9,11 +11,21 @@
 
 class InputHandler
 {
-    typedef ActorPosition A; // just to make the long bits where
-                             // static access is used more readable
 public:
     InputHandler(ActorPosition *actorPosition, ViewPlane *viewPlane);
     ~InputHandler();
+
+    bool checkForwardXCollision();
+    bool checkForwardYCollision();
+
+    bool checkBackwardsXCollision();
+    bool checkBackwardsYCollision();
+
+    bool checkLeftXCollition();
+    bool checkLeftYCollition();
+
+    bool checkRightXCollision();
+    bool checkRightYCollision();
 
     void inputEventMoveForward();
     void inputEventMoveBackwards();
@@ -25,8 +37,8 @@ public:
     void inputEventStrafeRight();
 
 private:
-    ActorPosition *a; // actorPosition instance to be modified by input
-    ViewPlane *v;     // viewPlane instance to be modified by input
+    ActorPosition *m_actorPosition; // actorPosition instance
+    ViewPlane *m_viewPlane;         // viewPlane instance
 };
 
 #endif // INPUTHANDLER_H

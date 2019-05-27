@@ -1,6 +1,6 @@
 #include "scenemap.h"
 
-const int SceneMap::mapArray[MAP_WIDTH][MAP_HEIGHT]
+const quint8 SceneMap::mapArray[MAP_WIDTH][MAP_HEIGHT]
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},

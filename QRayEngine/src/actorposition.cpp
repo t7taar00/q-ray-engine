@@ -1,73 +1,72 @@
 #include "actorposition.h"
 
-const double ActorPosition::moveSpeed(0.2);
-const double ActorPosition::rotateSpeed(0.05);
+const qreal ActorPosition::moveSpeed(0.2);
+const qreal ActorPosition::rotateSpeed(0.05);
 
 ActorPosition::ActorPosition()
+    : m_posX(22)
+    , m_posY(12)
+    , m_dirX(-1)
+    , m_dirY(0)
 {
-    posX = 22;
-    posY = 12;
-
-    dirX = -1;
-    dirY = 0;
 }
 
-double ActorPosition::getPosX() const
+qreal ActorPosition::getPosX() const
 {
-    return posX;
+    return m_posX;
 }
 
-void ActorPosition::setPosX(double value)
+void ActorPosition::setPosX(qreal value)
 {
-    posX = value;
+    m_posX = value;
 }
 
-double ActorPosition::getPosY() const
+qreal ActorPosition::getPosY() const
 {
-    return posY;
+    return m_posY;
 }
 
-void ActorPosition::setPosY(double value)
+void ActorPosition::setPosY(qreal value)
 {
-    posY = value;
+    m_posY = value;
 }
 
-double ActorPosition::getDirX() const
+qreal ActorPosition::getDirX() const
 {
-    return dirX;
+    return m_dirX;
 }
 
-void ActorPosition::setDirX(double value)
+void ActorPosition::setDirX(qreal value)
 {
-    dirX = value;
+    m_dirX = value;
 }
 
-double ActorPosition::getDirY() const
+qreal ActorPosition::getDirY() const
 {
-    return dirY;
+    return m_dirY;
 }
 
-void ActorPosition::setDirY(double value)
+void ActorPosition::setDirY(qreal value)
 {
-    dirY = value;
+    m_dirY = value;
 }
 
-int ActorPosition::getMapX() const
+quint8 ActorPosition::getMapX() const
 {
-    return mapX;
+    return m_mapX;
 }
 
-void ActorPosition::setMapX(int value)
+void ActorPosition::setMapX(quint8 value)
 {
-    mapX = value;
+    m_mapX = value;
 }
 
-int ActorPosition::getMapY() const
+quint8 ActorPosition::getMapY() const
 {
-    return mapY;
+    return m_mapY;
 }
 
-void ActorPosition::setMapY(int value)
+void ActorPosition::setMapY(quint8 value)
 {
-    mapY = value;
+    m_mapY = value;
 }

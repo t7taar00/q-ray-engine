@@ -1,96 +1,212 @@
 #include "inputhandler.h"
 
 InputHandler::InputHandler(ActorPosition *actorPosition, ViewPlane *viewPlane)
+    : m_actorPosition(actorPosition)
+    , m_viewPlane(viewPlane)
 {
-    a = actorPosition;
-    v = viewPlane;
 }
 
 InputHandler::~InputHandler()
 {
-    delete a;
-    a = nullptr;
+    delete m_actorPosition;
+    m_actorPosition = nullptr;
 
-    delete v;
-    v = nullptr;
+    delete m_viewPlane;
+    m_viewPlane = nullptr;
+}
+
+bool InputHandler::checkForwardXCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX()
+        + m_actorPosition->getDirX() * ActorPosition::moveSpeed);
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY());
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkForwardYCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX());
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY()
+        + m_actorPosition->getDirY() * ActorPosition::moveSpeed);
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkBackwardsXCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX()
+        - m_actorPosition->getDirX() * ActorPosition::moveSpeed);
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY());
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkBackwardsYCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX());
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY()
+        - m_actorPosition->getDirY() * ActorPosition::moveSpeed);
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkLeftXCollition()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX()
+        - m_viewPlane->getPlaneX() * ActorPosition::moveSpeed);
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY());
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkLeftYCollition()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX());
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY()
+        - m_viewPlane->getPlaneY() * ActorPosition::moveSpeed);
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkRightXCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX()
+        + m_viewPlane->getPlaneX() * ActorPosition::moveSpeed);
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY());
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
+}
+
+bool InputHandler::checkRightYCollision()
+{
+    quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX());
+
+    quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY()
+        + m_viewPlane->getPlaneY() * ActorPosition::moveSpeed);
+
+    if (SceneMap::mapArray[mapX][mapY] == 0)
+        return false;
+    else
+        return true;
 }
 
 void InputHandler::inputEventMoveForward()
 {
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX() + a->getDirX() * A::moveSpeed)]
-                         [static_cast<int>(a->getPosY())] == 0)
-    {
-        a->setPosX(a->getPosX() + a->getDirX() * A::moveSpeed);
+    if (!checkForwardXCollision()) {
+        m_actorPosition->setPosX(m_actorPosition->getPosX()
+            + m_actorPosition->getDirX() * ActorPosition::moveSpeed);
     }
 
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX())]
-                         [static_cast<int>(a->getPosY() + a->getDirY() * A::moveSpeed)] == 0)
-    {
-        a->setPosY(a->getPosY() + a->getDirY() * A::moveSpeed);
+    if (!checkForwardYCollision()) {
+        m_actorPosition->setPosY(m_actorPosition->getPosY()
+            + m_actorPosition->getDirY() * ActorPosition::moveSpeed);
     }
 }
 
 void InputHandler::inputEventMoveBackwards()
 {
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX() - a->getDirX() * A::moveSpeed)]
-                         [static_cast<int>(a->getPosY())] == 0)
-    {
-        a->setPosX(a->getPosX() - a->getDirX() * A::moveSpeed);
+    if (!checkBackwardsXCollision()) {
+        m_actorPosition->setPosX(m_actorPosition->getPosX()
+            - m_actorPosition->getDirX() * ActorPosition::moveSpeed);
     }
 
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX())]
-                         [static_cast<int>(a->getPosY() - a->getDirY() * A::moveSpeed)] == 0)
-    {
-        a->setPosY(a->getPosY() - a->getDirY() * A::moveSpeed);
+    if (!checkBackwardsYCollision()) {
+        m_actorPosition->setPosY(m_actorPosition->getPosY()
+            - m_actorPosition->getDirY() * ActorPosition::moveSpeed);
     }
 }
 
 void InputHandler::inputEventTurnLeft()
 {
-    double oldDirX = a->getDirX();
-    a->setDirX(a->getDirX() * std::cos(A::rotateSpeed) - a->getDirY() * std::sin(A::rotateSpeed));
-    a->setDirY(oldDirX * std::sin(A::rotateSpeed) + a->getDirY() * std::cos(A::rotateSpeed));
+    qreal oldDirX = m_actorPosition->getDirX();
 
-    double oldPlaneX = v->getPlaneX();
-    v->setPlaneX(v->getPlaneX() * std::cos(A::rotateSpeed) - v->getPlaneY() * std::sin(A::rotateSpeed));
-    v->setPlaneY(oldPlaneX * std::sin(A::rotateSpeed) + v->getPlaneY() * std::cos(A::rotateSpeed));
+    m_actorPosition->setDirX(m_actorPosition->getDirX()
+        * std::cos(ActorPosition::rotateSpeed) - m_actorPosition->getDirY()
+        * std::sin(ActorPosition::rotateSpeed));
+
+    m_actorPosition->setDirY(oldDirX * std::sin(ActorPosition::rotateSpeed)
+        + m_actorPosition->getDirY() * std::cos(ActorPosition::rotateSpeed));
+
+    qreal oldPlaneX = m_viewPlane->getPlaneX();
+
+    m_viewPlane->setPlaneX(m_viewPlane->getPlaneX()
+        * std::cos(ActorPosition::rotateSpeed) - m_viewPlane->getPlaneY()
+        * std::sin(ActorPosition::rotateSpeed));
+
+    m_viewPlane->setPlaneY(oldPlaneX * std::sin(ActorPosition::rotateSpeed)
+        + m_viewPlane->getPlaneY() * std::cos(ActorPosition::rotateSpeed));
 }
 
 void InputHandler::inputEventTurnRight()
 {
-    double oldDirX = a->getDirX();
-    a->setDirX(a->getDirX() * std::cos(-A::rotateSpeed) - a->getDirY() * std::sin(-A::rotateSpeed));
-    a->setDirY(oldDirX * std::sin(-A::rotateSpeed) + a->getDirY() * std::cos(-A::rotateSpeed));
+    qreal oldDirX = m_actorPosition->getDirX();
 
-    double oldPlaneX = v->getPlaneX();
-    v->setPlaneX(v->getPlaneX() * std::cos(-A::rotateSpeed) - v->getPlaneY() * std::sin(-A::rotateSpeed));
-    v->setPlaneY(oldPlaneX * std::sin(-A::rotateSpeed) + v->getPlaneY() * std::cos(-A::rotateSpeed));
+    m_actorPosition->setDirX(m_actorPosition->getDirX()
+        * std::cos(-ActorPosition::rotateSpeed) - m_actorPosition->getDirY()
+        * std::sin(-ActorPosition::rotateSpeed));
+
+    m_actorPosition->setDirY(oldDirX * std::sin(-ActorPosition::rotateSpeed)
+        + m_actorPosition->getDirY() * std::cos(-ActorPosition::rotateSpeed));
+
+    qreal oldPlaneX = m_viewPlane->getPlaneX();
+
+    m_viewPlane->setPlaneX(m_viewPlane->getPlaneX()
+        * std::cos(-ActorPosition::rotateSpeed) - m_viewPlane->getPlaneY()
+        * std::sin(-ActorPosition::rotateSpeed));
+
+    m_viewPlane->setPlaneY(oldPlaneX * std::sin(-ActorPosition::rotateSpeed)
+        + m_viewPlane->getPlaneY() * std::cos(-ActorPosition::rotateSpeed));
 }
 
 void InputHandler::inputEventStrafeLeft()
 {
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX() - v->getPlaneX() * A::moveSpeed)]
-                         [static_cast<int>(a->getPosY())] == 0)
-    {
-        a->setPosX(a->getPosX() - v->getPlaneX() * A::moveSpeed);
+    if (!checkLeftXCollition()) {
+        m_actorPosition->setPosX(m_actorPosition->getPosX()
+            - m_viewPlane->getPlaneX() * ActorPosition::moveSpeed);
     }
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX())]
-                         [static_cast<int>(a->getPosY() - v->getPlaneY() * A::moveSpeed)] == 0)
-    {
-        a->setPosY(a->getPosY() - v->getPlaneY() * A::moveSpeed);
+    if (!checkLeftYCollition()) {
+        m_actorPosition->setPosY(m_actorPosition->getPosY()
+            - m_viewPlane->getPlaneY() * ActorPosition::moveSpeed);
     }
 }
 
 void InputHandler::inputEventStrafeRight()
 {
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX() + v->getPlaneX() * A::moveSpeed)]
-                         [static_cast<int>(a->getPosY())] == 0)
-    {
-        a->setPosX(a->getPosX() + v->getPlaneX() * A::moveSpeed);
+    if (!checkRightXCollision()) {
+        m_actorPosition->setPosX(m_actorPosition->getPosX()
+            + m_viewPlane->getPlaneX() * ActorPosition::moveSpeed);
     }
-    if(SceneMap::mapArray[static_cast<int>(a->getPosX())]
-                         [static_cast<int>(a->getPosY() + v->getPlaneY() * A::moveSpeed)] == 0)
-    {
-        a->setPosY(a->getPosY() + v->getPlaneY() * A::moveSpeed);
+    if (!checkRightYCollision()) {
+        m_actorPosition->setPosY(m_actorPosition->getPosY()
+            + m_viewPlane->getPlaneY() * ActorPosition::moveSpeed);
     }
 }

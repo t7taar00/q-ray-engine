@@ -1,66 +1,68 @@
 #include "sceneview.h"
 
-SceneView::SceneView(QWidget *parent) : QWidget(parent)
+SceneView::SceneView(QWidget *parent)
+    : QWidget(parent)
 {
     this->setGeometry(0, 0, SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT);
     this->setFocusPolicy(Qt::StrongFocus);
     this->setCursor(Qt::CrossCursor);
 
-    actorPosition = new ActorPosition;
-    viewPlane = new ViewPlane;
-    rayProjectile = new RayProjectile;
+    m_actorPosition = new ActorPosition;
+    m_viewPlane = new ViewPlane;
+    m_rayProjectile = new RayProjectile;
 
-    textureReader = new TextureReader;
-    inputHandler = new InputHandler(actorPosition, viewPlane);
+    m_textureReader = new TextureReader;
+    m_inputHandler = new InputHandler(m_actorPosition, m_viewPlane);
 
-    buffer = QImage(SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT, QImage::Format_RGB32);
+    m_buffer = QImage(SCENE_VIEW_WIDTH, SCENE_VIEW_HEIGHT,
+        QImage::Format_RGB32);
 
-    ticker.start(20, this);
+    m_ticker.start(20, this);
 
-    musicFX = new AudioFX(":/music/music/tune.wav", QSound::Infinite);
-    musicFX->playAudio();
+    m_musicFX = new AudioFX(":/music/music/tune.wav", QSound::Infinite);
+    m_musicFX->playAudio();
 }
 
 SceneView::~SceneView()
 {
-    delete actorPosition;
-    actorPosition = nullptr;
+    delete m_actorPosition;
+    m_actorPosition = nullptr;
 
-    delete viewPlane;
-    viewPlane = nullptr;
+    delete m_viewPlane;
+    m_viewPlane = nullptr;
 
-    delete rayProjectile;
-    rayProjectile = nullptr;
+    delete m_rayProjectile;
+    m_rayProjectile = nullptr;
 
-    delete textureReader;
-    textureReader = nullptr;
+    delete m_textureReader;
+    m_textureReader = nullptr;
 
-    delete inputHandler;
-    inputHandler = nullptr;
+    delete m_inputHandler;
+    m_inputHandler = nullptr;
 
-    delete musicFX;
-    musicFX = nullptr;
+    delete m_musicFX;
+    m_musicFX = nullptr;
 }
 
 void SceneView::keyPressEvent(QKeyEvent *event)
 {
     event->accept();
 
-    if(event->key() == Qt::Key_A)
-        inputHandler->inputEventTurnLeft();
-    if(event->key() == Qt::Key_D)
-        inputHandler->inputEventTurnRight();
-    if(event->key() == Qt::Key_W)
-        inputHandler->inputEventMoveForward();
-    if(event->key() == Qt::Key_S)
-        inputHandler->inputEventMoveBackwards();
-    if(event->key() == Qt::Key_Q)
-        inputHandler->inputEventStrafeLeft();
-    if(event->key() == Qt::Key_E)
-        inputHandler->inputEventStrafeRight();
+    if (event->key() == Qt::Key_A)
+        m_inputHandler->inputEventTurnLeft();
+    if (event->key() == Qt::Key_D)
+        m_inputHandler->inputEventTurnRight();
+    if (event->key() == Qt::Key_W)
+        m_inputHandler->inputEventMoveForward();
+    if (event->key() == Qt::Key_S)
+        m_inputHandler->inputEventMoveBackwards();
+    if (event->key() == Qt::Key_Q)
+        m_inputHandler->inputEventStrafeLeft();
+    if (event->key() == Qt::Key_E)
+        m_inputHandler->inputEventStrafeRight();
 }
 
-void SceneView::timerEvent(QTimerEvent*)
+void SceneView::timerEvent(QTimerEvent *)
 {
     renderScene();
 }
@@ -69,176 +71,190 @@ void SceneView::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
 
-    p.drawImage(0, 0, buffer);
+    p.drawImage(0, 0, m_buffer);
     p.end();
 }
 
 void SceneView::renderScene()
 {
-    for(int x = 0; x < SCENE_VIEW_WIDTH; x = x + HORIZONTAL_SKIP)
-    {
+    for (qint32 x = 0; x < SCENE_VIEW_WIDTH; x = x + HORIZONTAL_SKIP) {
         // calculate ray position and direction
-        double cameraX = 2 * x / static_cast<double>(SCENE_VIEW_WIDTH) - 1; // x-coordinate in camera space
+        // x-coordinate in camera space
+        qreal cameraX = 2 * x / static_cast<qreal>(SCENE_VIEW_WIDTH) - 1;
 
-        rayProjectile->calcRayDirX(actorPosition, viewPlane, cameraX);
-        rayProjectile->calcRayDirY(actorPosition, viewPlane, cameraX);
+        m_rayProjectile->calcRayDirX(m_actorPosition, m_viewPlane, cameraX);
+        m_rayProjectile->calcRayDirY(m_actorPosition, m_viewPlane, cameraX);
 
         // which box of the map we're in
-        int mapX = static_cast<int>(actorPosition->getPosX());
-        int mapY = static_cast<int>(actorPosition->getPosY());
+        quint8 mapX = static_cast<quint8>(m_actorPosition->getPosX());
+        quint8 mapY = static_cast<quint8>(m_actorPosition->getPosY());
 
-        actorPosition->setMapX(mapX);
-        actorPosition->setMapY(mapY);
+        m_actorPosition->setMapX(mapX);
+        m_actorPosition->setMapY(mapY);
 
         // length of ray from one x or y-side to next x or y-side
-        rayProjectile->calcDeltaDistX();
-        rayProjectile->calcDeltaDistY();
+        m_rayProjectile->calcDeltaDistX();
+        m_rayProjectile->calcDeltaDistY();
 
-        double perpWallDist;
+        qreal perpWallDist;
 
         // what direction to step in x or y-direction (either +1 or -1)
-        int stepX;
-        int stepY;
+        qint8 stepX;
+        qint8 stepY;
 
-        int hit = 0; // was there a wall hit?
-        int side = 0; // was a NS or a EW wall hit?
+        qint8 hit = 0; // was there a wall hit?
+        qint8 side = 0; // was a NS or a EW wall hit?
 
         // calculate step and initial sideDist
-        stepX = rayProjectile->calcSideDistX(actorPosition);
-        stepY = rayProjectile->calcSideDistY(actorPosition);
+        stepX = m_rayProjectile->calcSideDistX(m_actorPosition);
+        stepY = m_rayProjectile->calcSideDistY(m_actorPosition);
 
         // perform DDA
-        while(hit == 0)
-        {
+        while (hit == 0) {
             // jump to next map square, OR in x-direction, OR in y-direction
-            side = rayProjectile->calcMapJump(actorPosition, stepX, stepY);
+            side = m_rayProjectile->calcMapJump(m_actorPosition, stepX, stepY);
 
-            mapX = actorPosition->getMapX();
-            mapY = actorPosition->getMapY();
+            mapX = m_actorPosition->getMapX();
+            mapY = m_actorPosition->getMapY();
 
             // check if ray has hit a wall
-            if(SceneMap::mapArray[mapX][mapY] > 0) hit = 1;
+            if (SceneMap::mapArray[mapX][mapY] > 0)
+                hit = 1;
         }
 
         // calculate distance projected on camera direction
-        if(side == 0) perpWallDist = (mapX - actorPosition->getPosX() + (1 - stepX) / 2) /
-                                     rayProjectile->getRayDirX();
-
-        else          perpWallDist = (mapY - actorPosition->getPosY() + (1 - stepY) / 2) /
-                                     rayProjectile->getRayDirY();
+        if (side == 0) {
+            perpWallDist = (mapX - m_actorPosition->getPosX()
+                + (1 - stepX) / 2) / m_rayProjectile->getRayDirX();
+        } else {
+            perpWallDist = (mapY - m_actorPosition->getPosY()
+                + (1 - stepY) / 2) / m_rayProjectile->getRayDirY();
+        }
 
         // calculate height of line to draw on screen
-        int lineHeight = static_cast<int>(SCENE_VIEW_HEIGHT / perpWallDist);
+        qint32 lineHeight = static_cast<qint32>
+            (SCENE_VIEW_HEIGHT / perpWallDist);
 
         // calculate lowest and highest pixel to fill in current stripe
-        int drawStart = -lineHeight / 2 + SCENE_VIEW_HEIGHT / 2;
-        if(drawStart < 0) drawStart = 0;
+        qint32 drawStart = -lineHeight / 2 + SCENE_VIEW_HEIGHT / 2;
 
-        int drawEnd = lineHeight / 2 + SCENE_VIEW_HEIGHT / 2;
-        if(drawEnd >= SCENE_VIEW_HEIGHT) drawEnd = SCENE_VIEW_HEIGHT - 1;
+        if (drawStart < 0)
+            drawStart = 0;
 
-        uint textureId = static_cast<uint>(SceneMap::mapArray[mapX][mapY]);
+        qint32 drawEnd = lineHeight / 2 + SCENE_VIEW_HEIGHT / 2;
+
+        if (drawEnd >= SCENE_VIEW_HEIGHT)
+            drawEnd = SCENE_VIEW_HEIGHT - 1;
+
+        quint8 textureId = SceneMap::mapArray[mapX][mapY];
 
         // calculate value of wallX
-        double wallX; // where exactly the wall was hit
+        qreal wallX; // where exactly the wall was hit
 
-        if(side == 0) wallX = actorPosition->getPosY() + perpWallDist *
-                              rayProjectile->getRayDirY();
-
-        else          wallX = actorPosition->getPosX() + perpWallDist *
-                              rayProjectile->getRayDirX();
-
+        if (side == 0) {
+            wallX = m_actorPosition->getPosY() + perpWallDist
+                * m_rayProjectile->getRayDirY();
+        } else {
+            wallX = m_actorPosition->getPosX() + perpWallDist
+                * m_rayProjectile->getRayDirX();
+        }
         wallX -= std::floor(wallX);
 
         // x coordinate on the texture
-        int texX = static_cast<int>(wallX * TextureReader::textureWidth);
+        qint32 texX = static_cast<qint32>(wallX * TextureReader::textureWidth);
 
-        if(side == 0 && rayProjectile->getRayDirX() > 0)
+        if (side == 0 && m_rayProjectile->getRayDirX() > 0)
             texX = TextureReader::textureWidth - texX - 1;
 
-        if(side == 1 && rayProjectile->getRayDirY() < 0)
+        if (side == 1 && m_rayProjectile->getRayDirY() < 0)
             texX = TextureReader::textureWidth - texX - 1;
 
-        int darknessFactor = textureReader->calcWallDarkness(lineHeight);
+        qint32 darknessFactor = m_textureReader->calcWallDarkness(lineHeight);
 
-        for(int y = drawStart; y < drawEnd; y++)
-        {
-            int d = y * 256 - SCENE_VIEW_HEIGHT * 128 + lineHeight * 128;  // 256 and 128 factors to avoid floats
+        for (qint32 y = drawStart; y < drawEnd; y++) {
+            // 256 and 128 factors to avoid floats
+            qint32 d = y * 256 - SCENE_VIEW_HEIGHT * 128 + lineHeight * 128;
             // TODO: avoid the division to speed this up
-            int texY = ((d * TextureReader::textureHeight) / lineHeight) / 256;
+            qint32 texY = ((d * TextureReader::textureHeight)
+                / lineHeight) / 256;
 
-            QColor textureColor = textureReader->getTexturePixel(textureId, texX, texY);
+            QColor textureColor = m_textureReader->getTexturePixel(textureId,
+                texX, texY);
 
-            if(side == 1) buffer.setPixelColor(x, y, textureColor.darker(darknessFactor + 50));
-            else          buffer.setPixelColor(x, y, textureColor.darker(darknessFactor));
+            if (side == 1) {
+                m_buffer.setPixelColor(x, y,
+                    textureColor.darker(darknessFactor + 50));
+            } else {
+                m_buffer.setPixelColor(x, y,
+                    textureColor.darker(darknessFactor));
+            }
         }
 
         // FLOOR CASTING
-        double floorXWall, floorYWall; // x, y position of the floor texel at the bottom of the wall
+        // x, y position of the floor texel at the bottom of the wall
+        qreal floorXWall, floorYWall;
 
         // 4 different wall directions possible
-        if(side == 0 && rayProjectile->getRayDirX() > 0)
-        {
+        if (side == 0 && m_rayProjectile->getRayDirX() > 0) {
             floorXWall = mapX;
             floorYWall = mapY + wallX;
-        }
-        else if(side == 0 && rayProjectile->getRayDirX() < 0)
-        {
+        } else if (side == 0 && m_rayProjectile->getRayDirX() < 0) {
             floorXWall = mapX + 1.0;
             floorYWall = mapY + wallX;
-        }
-        else if(side == 1 && rayProjectile->getRayDirY() > 0)
-        {
+        } else if (side == 1 && m_rayProjectile->getRayDirY() > 0) {
             floorXWall = mapX + wallX;
             floorYWall = mapY;
-        }
-        else
-        {
+        } else {
             floorXWall = mapX + wallX;
             floorYWall = mapY + 1.0;
         }
 
-        double distWall, distActor, currentDist;
+        qreal distWall, distActor, currentDist;
 
         distWall = perpWallDist;
         distActor = 0.0;
 
-        if(drawEnd < 0) drawEnd = SCENE_VIEW_HEIGHT; // becomes < 0 when the integer overflows
+        // becomes < 0 when the integer overflows
+        if (drawEnd < 0)
+            drawEnd = SCENE_VIEW_HEIGHT;
 
         // draw the floor from drawEnd to the bottom of the screen
-        for(int y = drawEnd + 1; y < SCENE_VIEW_HEIGHT; y++)
-        {
+        for (qint32 y = drawEnd + 1; y < SCENE_VIEW_HEIGHT; y++) {
             currentDist = SCENE_VIEW_HEIGHT / (2.0 * y - SCENE_VIEW_HEIGHT);
 
-            double weight = (currentDist - distActor) / (distWall - distActor);
+            qreal weight = (currentDist - distActor) / (distWall - distActor);
 
-            double currentFloorX = weight * floorXWall + (1.0 - weight) *
-                                   actorPosition->getPosX();
+            qreal currentFloorX = weight * floorXWall + (1.0 - weight)
+                * m_actorPosition->getPosX();
 
-            double currentFloorY = weight * floorYWall + (1.0 - weight) *
-                                   actorPosition->getPosY();
+            qreal currentFloorY = weight * floorYWall + (1.0 - weight)
+                * m_actorPosition->getPosY();
 
-            int floorTexX, floorTexY;
+            qint32 floorTexX, floorTexY;
 
-            floorTexX = static_cast<int>(currentFloorX * TextureReader::textureWidth) %
-                        TextureReader::textureWidth;
+            floorTexX = static_cast<qint32>
+                (currentFloorX * TextureReader::textureWidth)
+                % TextureReader::textureWidth;
 
-            floorTexY = static_cast<int>(currentFloorY * TextureReader::textureHeight) %
-                        TextureReader::textureHeight;
+            floorTexY = static_cast<qint32>
+                (currentFloorY * TextureReader::textureHeight)
+                % TextureReader::textureHeight;
 
-            int darknessFactor = textureReader->calcFloorDarkness(currentDist);
+            qint32 darknessFactor = m_textureReader->
+                calcFloorDarkness(currentDist);
 
             // floor
-            QColor texFloorColor = textureReader->getTexturePixel(
-                        textureReader->getTextureFloor(), floorTexX, floorTexY);
+            QColor texFloorColor = m_textureReader->getTexturePixel(
+                m_textureReader->getTextureFloor(), floorTexX, floorTexY);
 
-            buffer.setPixelColor(x, y, texFloorColor.darker(darknessFactor));
+            m_buffer.setPixelColor(x, y, texFloorColor.darker(darknessFactor));
 
             // ceiling
-            QColor texCeilingColor = textureReader->getTexturePixel(
-                        textureReader->getTextureCeiling(), floorTexX, floorTexY);
+            QColor texCeilingColor = m_textureReader->getTexturePixel(
+                m_textureReader->getTextureCeiling(), floorTexX, floorTexY);
 
-            buffer.setPixelColor(x, SCENE_VIEW_HEIGHT - y, texCeilingColor.darker(darknessFactor));
+            m_buffer.setPixelColor(x, SCENE_VIEW_HEIGHT - y,
+                texCeilingColor.darker(darknessFactor));
         }
     }
     update();

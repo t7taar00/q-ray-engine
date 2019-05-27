@@ -1,41 +1,43 @@
 #ifndef ACTORPOSITION_H
 #define ACTORPOSITION_H
 
+#include <QtGlobal>
+
 class ActorPosition
 {
 public:
     ActorPosition();
 
-    double getPosX() const;
-    void setPosX(double value);
+    qreal getPosX() const;
+    void setPosX(qreal value);
 
-    double getPosY() const;
-    void setPosY(double value);
+    qreal getPosY() const;
+    void setPosY(qreal value);
 
-    double getDirX() const;
-    void setDirX(double value);
+    qreal getDirX() const;
+    void setDirX(qreal value);
 
-    double getDirY() const;
-    void setDirY(double value);
+    qreal getDirY() const;
+    void setDirY(qreal value);
 
-    int getMapX() const;
-    void setMapX(int value);
+    quint8 getMapX() const;
+    void setMapX(quint8 value);
 
-    int getMapY() const;
-    void setMapY(int value);
+    quint8 getMapY() const;
+    void setMapY(quint8 value);
 
-    static const double moveSpeed;
-    static const double rotateSpeed;
+    static const qreal moveSpeed;
+    static const qreal rotateSpeed;
 
 private:
-    double posX;
-    double posY;
+    qreal m_posX;
+    qreal m_posY;
 
-    double dirX;
-    double dirY;
+    qreal m_dirX;
+    qreal m_dirY;
 
-    int mapX;
-    int mapY;
+    quint8 m_mapX;
+    quint8 m_mapY;
 };
 
 #endif // ACTORPOSITION_H
