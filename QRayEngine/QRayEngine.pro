@@ -12,6 +12,7 @@ CONFIG    += c++11
 
 SOURCES   += src/main.cpp \
              src/mainview.cpp \
+             src/renderengine.cpp \
              src/viewplane.cpp \
              src/actorposition.cpp \
              src/rayprojectile.cpp \
@@ -22,6 +23,7 @@ SOURCES   += src/main.cpp \
              src/audiofx.cpp
 
 HEADERS   += src/mainview.h \
+             src/renderengine.h \
              src/viewplane.h \
              src/actorposition.h \
              src/rayprojectile.h \

@@ -11,6 +11,7 @@
 #include <QBasicTimer>
 #include <QPainter>
 
+#include "renderengine.h"
 #include "inputhandler.h"
 #include "rayprojectile.h"
 #include "texturereader.h"
@@ -34,6 +35,7 @@ private:
     QBasicTimer m_ticker;
     QImage m_buffer;
 
+    RenderEngine *m_renderEngine;
     ActorPosition *m_actorPosition;
     ViewPlane *m_viewPlane;
     RayProjectile *m_rayProjectile;
